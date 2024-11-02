@@ -16,17 +16,14 @@ app.use(cors({
 app.use(bodyParser.json());
 
 // Подключение к MongoDB
-mongoose
-  .connect(process.env.MONGO_URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() => {
-    console.log("Connected to MongoDB");
-  })
-  .catch((error) => {
-    console.error("Error connecting to MongoDB:", error);
-  });
+mongoose.connect(process.env.MONGO_URL, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+}).then(() => {
+  console.log("Connected to MongoDB");
+}).catch((error) => {
+  console.error("Error connecting to MongoDB:", error);
+});
 
 // Схема пользователя
 const UserSchema = new mongoose.Schema({
@@ -125,6 +122,11 @@ app.patch("/api/users/:id", async (req, res) => {
     res.status(500).json("Internal server error");
   }
 });
+
+app.get("/api/test", (req, res) => {
+  res.status(200).json({ message: "Test endpoint works!" });
+});
+
 
 // Экспортируем приложение
 module.exports = app;
